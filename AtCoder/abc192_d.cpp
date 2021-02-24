@@ -1,58 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define ll long long
 
-int ctoi(char c) {
-  switch (c) {
-    case '0':
-      return 0;
-    case '1':
-      return 1;
-    case '2':
-      return 2;
-    case '3':
-      return 3;
-    case '4':
-      return 4;
-    case '5':
-      return 5;
-    case '6':
-      return 6;
-    case '7':
-      return 7;
-    case '8':
-      return 8;
-    case '9':
-      return 9;
-    default:
-      return -1;
+bool check(ll base, string X, ll M) {
+  ll basenTo10 = 0;
+  int N = X.length();
+  for (int i = 0; i < N; i++) {
+    int x = X.at(i) - '0';
+    if (basenTo10 > (M - x) / base) return false;
+
+    basenTo10 = basenTo10 * base + x;
+
+    if (basenTo10 > M) {
+      return false;
+    }
   }
+  return true;
 }
 
 int main() {
   string X;
-  int64_t M;
+  ll M;
   cin >> X >> M;
 
-  string x_str = X;
-  sort(x_str.begin(), x_str.end());
-  char max_str = x_str.at(x_str.length() - 1);
-  int max = ctoi(max_str);
-
-  long long i = 1;
-  while (true) {
-    long long base = max + i;
-    long long ans = 0;
-    for (long long idx = 0; idx < X.length(); idx++) {
-      long long num = ctoi(X.at(idx));
-      ans += num * (long long)pow(base, idx);
+  if (X.length() == 1) {
+    int x = X.at(0) - '0';
+    if (x > M) {
+      cout << 0 << endl;
+    } else {
+      cout << 1 << endl;
     }
-    if (ans > M) {
-      break;
-    }
-    i++;
+    return 0;
   }
 
-  cout << i - 1 << endl;
+  int ma = 0;
+  for (auto x : X) {
+    ma = max(x - '0', ma);
+  }
+
+  ll ok = ma;
+  ll ng = M + 1;
+  while (abs(ok - ng) > 1) {
+    ll mid = (ok + ng) / 2;
+    if (check(mid, X, M)) {
+      ok = mid;
+    } else {
+      ng = mid;
+    }
+  }
+
+  cout << max(0LL, (ok - ma)) << endl;
 
   return 0;
 }
