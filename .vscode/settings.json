@@ -11,6 +11,7 @@
     "utility": "cpp",
     "valarray": "cpp",
     "random": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "iomanip": "cpp"
   }
 }
