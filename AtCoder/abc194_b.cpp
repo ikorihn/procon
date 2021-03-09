@@ -25,7 +25,7 @@ typedef long long ll;
 // 問題による
 #define MOD 1000000007
 
-int main() {
+int maina() {
   // 小数の桁数の出力指定
   // cout << fixed << setprecision(10);
   // 入力の高速化用のコード
@@ -80,6 +80,42 @@ int main() {
   } else {
     cout << min_sum << endl;
   }
+
+  return 0;
+}
+
+// 別解
+int main() {
+  // 小数の桁数の出力指定
+  // cout << fixed << setprecision(10);
+  // 入力の高速化用のコード
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+
+  int N;
+  cin >> N;
+  vector<int> A(N), B(N);
+  for (int i = 0; i < N; i++) {
+    int a, b;
+    cin >> a >> b;
+    A[i] = a;
+    B[i] = b;
+  }
+
+  int ans = INF32;
+  REP(i, N) {
+    REP(j, N) {
+      int cost;
+      if (i == j) {
+        cost = A[i] + B[j];
+      } else {
+        cost = max(A[i], B[j]);
+      }
+      ans = min(ans, cost);
+    }
+  }
+
+  cout << ans << endl;
 
   return 0;
 }
